@@ -1,13 +1,14 @@
-// import { CreateShudi } from "@/features/main";
-import { Box, Text } from "@gluestack-ui/themed";
-import { StyleSheet, View } from "react-native";
+import React from "react";
 
-const SignUp = () => {
+import { SignIn } from "features/auth";
+import { View, StyleSheet, Text } from "react-native";
+
+const Login = () => {
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.title}>Tab Two 2</Text> */}
+      <Text style={styles.title}>Tab Two 2</Text>
       <View style={styles.separator} />
-      <Text
+      {/* <Text
         pt="$1"
         sx={{
           "@base": {
@@ -23,7 +24,7 @@ const SignUp = () => {
         }}
       >
         SHUDI
-      </Text>
+      </Text> */}
       {/* <EditScreenInfo path="app/(tabs)/two.tsx" /> */}
     </View>
   );
@@ -45,4 +46,4 @@ const styles = StyleSheet.create({
     width: "80%",
   },
 });
-export default SignUp;
+export default Login;

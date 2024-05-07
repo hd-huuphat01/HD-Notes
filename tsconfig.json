@@ -5,26 +5,29 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
+      "@/assets/*": [
+        "assets/*"
+      ],
       "@/config/*": [
-        "src/config/*"
+        "config/*"
       ],
       "@/features/*": [
-        "src/features/*"
+        "features/*"
       ],
       "@/providers/*": [
-        "src/providers/*"
+        "providers/*"
       ],
       "@/utils/*": [
-        "src/utils/*"
+        "utils/*"
       ],
       "@/hooks/*": [
-        "src/hooks/*"
+        "hooks/*"
       ],
       "@/generated/*": [
-        "src/generated/*"
+        "generated/*"
       ],
       "@/components/*": [
-        "src/components/*"
+        "components/*"
       ],
     }
   }

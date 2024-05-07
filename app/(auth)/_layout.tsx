@@ -4,7 +4,7 @@ import { Link, Stack, Tabs } from "expo-router";
 
 export default function Layout() {
   return (
-    <Stack initialRouteName="sign-in" screenOptions={{ gestureEnabled: false }}>
+    <Stack initialRouteName="index" screenOptions={{ gestureEnabled: false }}>
       <Stack.Screen name="sign-in" options={{ headerShown: false }} />
       <Stack.Screen
         name="sign-up"
