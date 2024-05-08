@@ -3,31 +3,33 @@ import React, { useCallback, useState } from "react";
 
 import SignInView from "./SignInView";
 import { Alert } from "react-native";
-import { useCreateAccount } from "firebase";
+import { useCreateAccount, useLogIn } from "firebase";
 
 interface SignInContainerProps {}
 
 const SignInContainer: React.FC<SignInContainerProps> = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const handleState = () => {
-    setShowPassword((showState) => {
-      return !showState;
-    });
-  };
-  const handleSignUp = useCallback(async () => {
-    const user = await useCreateAccount(
-      "jane.doe@example.com",
-      "SuperSecretPassword!"
-    );
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const handleSignIn = useCallback(async () => {
+    console.log("email1", email);
+    console.log("password2", password);
+    const user = await useLogIn(email, password);
   }, []);
+
   return (
     <SignInView
+      email={email}
+      hadleSetEmail={(text: string) => setEmail(text)}
+      password={password}
+      hadleSetPassword={(text: string) => setPassword(text)}
       showPassword={showPassword}
-      hadleSetShowPassword={handleState}
+      hadleSetShowPassword={() => setShowPassword(!showPassword)}
       onLogin={() => {
-        // router.push("/sign-up");
-        console.log("first");
-        handleSignUp();
+        handleSignIn();
+      }}
+      handleGoToSignUp={() => {
+        router.push("/sign-up");
       }}
     />
   );

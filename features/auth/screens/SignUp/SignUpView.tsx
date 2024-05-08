@@ -16,43 +16,87 @@ import {
   MailIcon,
   LockIcon,
   ButtonText,
+  Pressable,
 } from "@gluestack-ui/themed";
 import LogoView from "@/components/Elements/Logo";
 
-interface SignInViewProps {
+interface SignUpViewProps {
+  email: string;
+  hadleSetEmail: (text: string) => void;
+  password: string;
+  hadleSetPassword: (text: string) => void;
   showPassword: boolean;
   hadleSetShowPassword: () => void;
   onLogin: () => void;
+  handleGoToSignUp: () => void;
 }
 
-const SignInView: React.FC<SignInViewProps> = ({
+const SignUpView: React.FC<SignUpViewProps> = ({
+  email,
+  hadleSetEmail,
+  password,
+  hadleSetPassword,
   showPassword,
   hadleSetShowPassword,
   onLogin,
+  handleGoToSignUp,
 }) => (
   <Box alignItems="center" pt="$20" paddingHorizontal="$4">
     <LogoView />
+    <Text
+      color="$secondary_yellow4"
+      fontSize="$md"
+      fontWeight="bold"
+      lineHeight="$xs"
+      pt="$3"
+      pb="$1"
+    >
+      Create a new account
+    </Text>
     <FormControl pt="$10" w="$full">
       <VStack space="xs">
-        <Text color="$secondary_yellow4" lineHeight="$xs" pb="$1">
+        <Text
+          color="$secondary_yellow4"
+          fontWeight="bold"
+          lineHeight="$xs"
+          pb="$1"
+        >
           Email
         </Text>
         <Input>
           <InputSlot pl="$2" pr="$1" onPress={hadleSetShowPassword}>
             <InputIcon size="lg" as={MailIcon} color="$borderDark500" />
           </InputSlot>
-          <InputField type="text" />
+          <InputField
+            type="text"
+            value={email}
+            onChangeText={(text) => {
+              hadleSetEmail(text);
+            }}
+          />
         </Input>
       </VStack>
       <VStack space="xs">
-        <Text color="$secondary_yellow4" lineHeight="$xs" pt="$3" pb="$1">
+        <Text
+          color="$secondary_yellow4"
+          fontWeight="bold"
+          lineHeight="$xs"
+          pt="$3"
+          pb="$1"
+        >
           Password
         </Text>
         <Input>
           <InputSlot pl="$2" pr="$1" onPress={hadleSetShowPassword}>
             <InputIcon size="lg" as={LockIcon} color="$borderDark500" />
           </InputSlot>
-          <InputField type={showPassword ? "text" : "password"} />
+          <InputField
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChangeText={(text) => {
+              hadleSetPassword(text);
+            }}
+          />
           <InputSlot pr="$3" onPress={hadleSetShowPassword}>
             <InputIcon
               size="lg"
@@ -63,9 +107,21 @@ const SignInView: React.FC<SignInViewProps> = ({
         </Input>
       </VStack>
     </FormControl>
-    <Button onPress={onLogin} mt="$10" w="$40" bgColor="$secondary_yellow3">
-      <ButtonText color="$white">Sign up</ButtonText>
+    <Button onPress={onLogin} mt="$8" w="$full" bgColor="$secondary_yellow3">
+      <ButtonText color="$white" fontWeight="bold">
+        Sign up
+      </ButtonText>
     </Button>
+    <Box pt="$20" flexDirection="row">
+      <Text color="$black" fontSize="$sm" fontWeight="$semibold">
+        Already have an account?
+      </Text>
+      <Pressable onPress={handleGoToSignUp} pl="$1">
+        <Text color="$secondary_yellow4" fontSize="$sm" fontWeight="$semibold">
+          Login here
+        </Text>
+      </Pressable>
+    </Box>
   </Box>
 );
-export default SignInView;
+export default SignUpView;
