@@ -134,6 +134,11 @@ const config = createConfig({
       info700: "#5B21B6",
       info800: "#4C1D95",
       info900: "#441e7d",
+
+      secondary_yellow1: "#F8EFBA",
+      secondary_yellow2: "#F5CD79",
+      secondary_yellow3: "#FECA57",
+      secondary_yellow4: "#DAA520",
     },
     space: {
       ...defaultConfig.tokens.space,

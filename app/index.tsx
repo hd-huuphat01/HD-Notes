@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 
 import { useRouter } from "expo-router";
-import { SignIn } from "@/features/auth";
 import { Box, Text, Image, Spinner } from "@gluestack-ui/themed";
-import Logo from "@/assets/images/Logo.png";
+import { LogoImage } from "@/components/Elements";
 
 function Intro(): React.ReactElement {
   const router = useRouter();
@@ -14,12 +13,10 @@ function Intro(): React.ReactElement {
       }, 1000)
     );
     router.push("/sign-in");
-    // const getInfoDone = getBooleanLocal('isGetInfoDone');
   };
 
   useEffect(() => {
     init();
-    // dispatch(fetchMining());
   }, []);
 
   return (
@@ -31,7 +28,7 @@ function Intro(): React.ReactElement {
       bgColor="white"
       // pt="$20"
     >
-      <Image size="lg" borderRadius={10} source={Logo} />
+      <LogoImage />
       <Text
         pt="$1"
         sx={{
