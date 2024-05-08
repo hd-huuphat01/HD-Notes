@@ -10,13 +10,13 @@ import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDfTgewzKJxsgYtyr_gatDYjZ1mWwQoUn4",
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "hd-notes.firebaseapp.com",
   projectId: "hd-notes",
-  storageBucket: "hd-notes.appspot.com",
-  messagingSenderId: "878409843897",
-  appId: "1:878409843897:web:65df8961a16db2c9fc0768",
-  measurementId: "G-BPH2TGDJ39",
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
