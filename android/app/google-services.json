@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "878409843897",
+    "project_id": "hd-notes",
+    "storage_bucket": "hd-notes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878409843897:android:f237b541d706288ffc0768",
+        "android_client_info": {
+          "package_name": "com.hdwebsoft.notes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwPbVROoK5ftEFZ5YcMeVOuOC-QwacWAw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
