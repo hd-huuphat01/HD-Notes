@@ -6,6 +6,7 @@
 // import type { SignInResult } from "./screens/PhoneNumber";
 // import PhoneNumber from "./screens/PhoneNumber";
 import SignIn from "./screens/SignIn";
+import SignUpProvider from "./screens/SignUp";
 // import VerifyPhoneNumber from "./screens/VerifyPhoneNumber";
 
 export {
@@ -14,6 +15,7 @@ export {
   // GateTo,
   // PhoneNumber,
   SignIn,
+  SignUpProvider,
   // SignInResult,
   // VerifyPhoneNumber,
   // useAuth,

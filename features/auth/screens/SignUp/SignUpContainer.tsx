@@ -1,54 +1,41 @@
 import { router } from "expo-router";
 import React, { useCallback, useState } from "react";
-import auth from "@react-native-firebase/auth";
 
-import SignInView from "./SignUpView";
+import SignUpView from "./SignUpView";
 import { Alert } from "react-native";
+import { useCreateAccount, useLogIn } from "firebase";
 
-interface SignInContainerProps {}
+interface SignUpContainerProps {}
 
-const SignInContainer: React.FC<SignInContainerProps> = () => {
-  const [showPassword, setShowPassword] = useState(false);
+const SignUpContainer: React.FC<SignUpContainerProps> = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const handleState = () => {
     setShowPassword((showState) => {
       return !showState;
     });
   };
-  const handleSignUp = useCallback(() => {
-    try {
-      auth()
-        .createUserWithEmailAndPassword(
-          "jane.doe@example.com",
-          "SuperSecretPassword!"
-        )
-        .then(() => {
-          console.log("User account created & signed in!");
-        })
-        .catch((error) => {
-          if (error.code === "auth/email-already-in-use") {
-            console.log("That email address is already in use!");
-          }
-          if (error.code === "auth/invalid-email") {
-            console.log("That email address is invalid!");
-          }
-          console.error(error);
-        });
-    } catch (e) {
-      console.log(e);
-      Alert.alert("Oppss", "Please check again");
-    }
+  const handleSignUp = useCallback(async () => {
+    const user = await useCreateAccount(email, password);
   }, []);
+
   return (
-    <SignInView
+    <SignUpView
+      email={email}
+      hadleSetEmail={(text: string) => setEmail(text)}
+      password={password}
+      hadleSetPassword={(text: string) => setPassword(text)}
       showPassword={showPassword}
-      hadleSetShowPassword={handleState}
+      hadleSetShowPassword={() => setShowPassword(!showPassword)}
       onLogin={() => {
-        // router.push("/sign-up");
-        console.log("first");
         handleSignUp();
+      }}
+      handleGoToSignUp={() => {
+        router.back();
       }}
     />
   );
 };
 
-export default SignInContainer;
+export default SignUpContainer;
