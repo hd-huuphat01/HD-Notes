@@ -44,6 +44,7 @@ interface SignInViewProps {
   hadleSetShowPassword: () => void;
   onLogin: () => void;
   onSignInWithGoogle: () => void;
+  onSignInWithFacebook: () => void;
   handleGoToSignUp: () => void;
 }
 
@@ -57,6 +58,7 @@ const SignInView: React.FC<SignInViewProps> = ({
   hadleSetShowPassword,
   onLogin,
   onSignInWithGoogle,
+  onSignInWithFacebook,
   handleGoToSignUp,
 }) => (
   <Box alignItems="center" pt="$20" paddingHorizontal="$4">
@@ -159,7 +161,13 @@ const SignInView: React.FC<SignInViewProps> = ({
         )}
       />
     </Box>
-    <Button onPress={onLogin} mt="$8" w="$full" bgColor="$secondary_yellow3">
+    <Button
+      onPress={onLogin}
+      mt="$8"
+      w="$full"
+      bgColor="$secondary_yellow3"
+      isDisabled={isDisabled}
+    >
       <ButtonText color="$white" fontWeight="bold">
         LOG IN
       </ButtonText>
@@ -197,7 +205,7 @@ const SignInView: React.FC<SignInViewProps> = ({
       <Box />
     </Pressable>
     <Pressable
-      onPress={() => console.log("Hello")}
+      onPress={onSignInWithFacebook}
       w="$full"
       mt="$2"
       p="$2"
@@ -219,7 +227,7 @@ const SignInView: React.FC<SignInViewProps> = ({
       <Text color="$black" fontSize="$sm" fontWeight="$semibold">
         Don't have an account?
       </Text>
-      <Pressable onPress={handleGoToSignUp} pl="$1" isDisabled={isDisabled}>
+      <Pressable onPress={handleGoToSignUp} pl="$1">
         <Text color="$secondary_yellow4" fontSize="$sm" fontWeight="$semibold">
           Sign up now
         </Text>

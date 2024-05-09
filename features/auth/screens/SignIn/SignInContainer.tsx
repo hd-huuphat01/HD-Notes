@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import validator from "validator";
+import { AccessToken, LoginManager } from "react-native-fbsdk-next";
 
 interface SignInContainerProps {}
 
@@ -92,9 +93,11 @@ const SignInContainer: React.FC<SignInContainerProps> = () => {
         // offlineAccess: true,
       });
       const result = await GoogleSignin.signIn();
+      console.log("result", result);
       const googleCredential = auth.GoogleAuthProvider.credential(
         result.idToken
       );
+      console.log("googleCredential", googleCredential);
       const firebaseAuth = await auth().signInWithCredential(googleCredential);
       const idtoken = await firebaseAuth.user.getIdTokenResult();
       console.log("idtoken", idtoken);
@@ -102,6 +105,30 @@ const SignInContainer: React.FC<SignInContainerProps> = () => {
     } catch (error: any) {
       console.log("onLoginViaGoogle error", { error });
     }
+  };
+
+  const handleSignInWithFacebook = () => {
+    LoginManager.logInWithPermissions(["public_profile", "email"])
+      .then((result) => {
+        AccessToken.getCurrentAccessToken().then(async (data) => {
+          if (data) {
+            const fbCredential = auth.FacebookAuthProvider.credential(
+              data.accessToken
+            );
+            console.log("fbCredential", fbCredential);
+            const firebaseAuth = await auth().signInWithCredential(
+              fbCredential
+            );
+            console.log("firebaseAuth", firebaseAuth);
+            const idtoken = await firebaseAuth.user.getIdTokenResult();
+            console.log("idtoken", idtoken);
+            router.push("/home");
+          }
+        });
+      })
+      .catch((error) => {
+        console.log("login has error: " + error);
+      });
   };
 
   return (
@@ -116,6 +143,7 @@ const SignInContainer: React.FC<SignInContainerProps> = () => {
         handleSubmit();
       }}
       onSignInWithGoogle={() => handleSignInWithGoogle()}
+      onSignInWithFacebook={() => handleSignInWithFacebook()}
       handleGoToSignUp={() => {
         router.push("/sign-up");
       }}

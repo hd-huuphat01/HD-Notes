@@ -42,6 +42,20 @@ export default {
           },
         },
       ],
+      [
+        "react-native-fbsdk-next",
+        {
+          appID: "1653449488804220",
+          clientToken: "2fc51f5a65680fa4d80a92482777f43b",
+          displayName: "HD-Notes",
+          scheme: "fb1653449488804220",
+          advertiserIDCollectionEnabled: false,
+          autoLogAppEventsEnabled: false,
+          isAutoInitEnabled: true,
+          iosUserTrackingPermission:
+            "This identifier will be used to deliver personalized ads to you.",
+        },
+      ],
     ],
     extra: {
       router: {
