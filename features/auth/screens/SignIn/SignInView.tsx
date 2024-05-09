@@ -36,6 +36,7 @@ interface SignInViewProps {
   showPassword: boolean;
   hadleSetShowPassword: () => void;
   onLogin: () => void;
+  onSignInWithGoogle: () => void;
   handleGoToSignUp: () => void;
 }
 
@@ -47,6 +48,7 @@ const SignInView: React.FC<SignInViewProps> = ({
   showPassword,
   hadleSetShowPassword,
   onLogin,
+  onSignInWithGoogle,
   handleGoToSignUp,
 }) => (
   <Box alignItems="center" pt="$20" paddingHorizontal="$4">
@@ -135,7 +137,7 @@ const SignInView: React.FC<SignInViewProps> = ({
     </Box>
 
     <Pressable
-      onPress={() => console.log("Hello")}
+      onPress={onSignInWithGoogle}
       w="$full"
       mt="$10"
       p="$2"
@@ -155,7 +157,7 @@ const SignInView: React.FC<SignInViewProps> = ({
     <Pressable
       onPress={() => console.log("Hello")}
       w="$full"
-      mt="$4"
+      mt="$2"
       p="$2"
       flexDirection="row"
       borderWidth="$1"
@@ -171,7 +173,7 @@ const SignInView: React.FC<SignInViewProps> = ({
       <Box />
     </Pressable>
 
-    <Box pt="$20" flexDirection="row">
+    <Box pt="$12" flexDirection="row">
       <Text color="$black" fontSize="$sm" fontWeight="$semibold">
         Don't have an account?
       </Text>

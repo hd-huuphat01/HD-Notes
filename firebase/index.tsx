@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  GoogleAuthProvider,
 } from "@firebase/auth";
 import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
@@ -33,6 +34,24 @@ export const useLogIn = async (email: string, password: string) => {
     console.log("User account signed in!");
     console.log("user", user);
     return user;
+  } catch (error: any) {
+    // console.log("error", error);
+
+    if (error.code === "auth/email-already-in-use") {
+      console.log("That email address is already in use!");
+    }
+    if (error.code === "auth/invalid-email") {
+      console.log("That email address is invalid!");
+    }
+    console.error(error);
+  }
+};
+
+export const useLogInWithGoogle = async (token: string) => {
+  try {
+    const googleCredential = GoogleAuthProvider.credential(token);
+
+    // return user;
   } catch (error: any) {
     // console.log("error", error);
 
