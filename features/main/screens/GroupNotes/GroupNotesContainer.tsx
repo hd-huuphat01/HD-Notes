@@ -1,13 +1,13 @@
 import { router } from "expo-router";
 import React, { useCallback, useState } from "react";
 
-import SignUpView from "./SignUpView";
+import GroupNotesView from "./GroupNotesView";
 import { Alert } from "react-native";
-// import { useCreateAccount, useLogIn } from "firebase";
+import { useCreateAccount, useLogIn } from "firebase";
 
 interface SignUpContainerProps {}
 
-const SignUpContainer: React.FC<SignUpContainerProps> = () => {
+const GroupNotesContainer: React.FC<SignUpContainerProps> = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -17,11 +17,11 @@ const SignUpContainer: React.FC<SignUpContainerProps> = () => {
     });
   };
   const handleSignUp = useCallback(async () => {
-    // const user = await useCreateAccount(email, password);
+    const user = await useCreateAccount(email, password);
   }, []);
 
   return (
-    <SignUpView
+    <GroupNotesView
       email={email}
       hadleSetEmail={(text: string) => setEmail(text)}
       password={password}
@@ -38,4 +38,4 @@ const SignUpContainer: React.FC<SignUpContainerProps> = () => {
   );
 };
 
-export default SignUpContainer;
+export default GroupNotesContainer;

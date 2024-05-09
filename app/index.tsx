@@ -12,7 +12,7 @@ function Intro(): React.ReactElement {
         resolve(true);
       }, 1000)
     );
-    router.push("/sign-in");
+    router.replace("/sign-in");
   };
 
   useEffect(() => {

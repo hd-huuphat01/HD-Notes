@@ -16,7 +16,7 @@ export default {
     ios: {
       supportsTablet: true,
       bundleIdentifier: "com.hdwebsoft.notes",
-      googleServicefile: process.env.GOOGLE_SERVICE_INFOSPLIST,
+      googleServicesFile: "./GoogleService-Info.plist",
     },
     android: {
       adaptiveIcon: {
@@ -24,12 +24,25 @@ export default {
         backgroundColor: "#ffffff",
       },
       package: "com.hdwebsoft.notes",
-      googleServicefile: process.env.GOOGLE_SERVICES_JSON,
+      googleServicesFile: "./google-services.json",
     },
     web: {
       favicon: "./assets/favicon.png",
     },
-    plugins: ["expo-router", "@react-native-google-signin/google-signin"],
+    plugins: [
+      "expo-router",
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      "@react-native-firebase/crashlytics",
+      [
+        "expo-build-properties",
+        {
+          ios: {
+            useFrameworks: "static",
+          },
+        },
+      ],
+    ],
     extra: {
       router: {
         origin: false,
