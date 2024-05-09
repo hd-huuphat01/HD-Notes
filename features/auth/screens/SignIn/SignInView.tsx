@@ -17,11 +17,17 @@ import {
   LockIcon,
   ButtonText,
   Pressable,
+  FormControlLabel,
+  FormControlLabelText,
+  FormControlError,
+  FormControlErrorIcon,
+  AlertCircleIcon,
+  FormControlErrorText,
 } from "@gluestack-ui/themed";
 import LogoView from "@/components/Elements/Logo";
 import IconGoogle from "@/assets/images/google.png";
 import IconFacebook from "@/assets/images/facebook.png";
-import { Control } from "react-hook-form";
+import { Control, Controller, FieldErrors } from "react-hook-form";
 
 export interface LoginForm {
   email: string;
@@ -29,10 +35,11 @@ export interface LoginForm {
 }
 
 interface SignInViewProps {
-  email: string;
-  hadleSetEmail: (text: string) => void;
-  password: string;
-  hadleSetPassword: (text: string) => void;
+  control: Control<LoginForm>;
+  errors: FieldErrors<LoginForm>;
+  isSubmitting?: boolean;
+  isDisabled?: boolean;
+
   showPassword: boolean;
   hadleSetShowPassword: () => void;
   onLogin: () => void;
@@ -41,10 +48,11 @@ interface SignInViewProps {
 }
 
 const SignInView: React.FC<SignInViewProps> = ({
-  email,
-  hadleSetEmail,
-  password,
-  hadleSetPassword,
+  control,
+  errors,
+  isSubmitting = false,
+  isDisabled = false,
+
   showPassword,
   hadleSetShowPassword,
   onLogin,
@@ -63,60 +71,94 @@ const SignInView: React.FC<SignInViewProps> = ({
     >
       Login to continue
     </Text>
-    <FormControl pt="$10" w="$full">
-      <VStack space="xs">
-        <Text
-          color="$secondary_yellow4"
-          fontWeight="bold"
-          lineHeight="$xs"
-          pb="$1"
-        >
-          Email
-        </Text>
-        <Input>
-          <InputSlot pl="$2" pr="$1" onPress={hadleSetShowPassword}>
-            <InputIcon size="lg" as={MailIcon} color="$borderDark500" />
-          </InputSlot>
-          <InputField
-            type="text"
-            value={email}
-            onChangeText={(text) => {
-              hadleSetEmail(text);
-            }}
-          />
-        </Input>
-      </VStack>
-      <VStack space="xs">
-        <Text
-          color="$secondary_yellow4"
-          fontWeight="bold"
-          lineHeight="$xs"
-          pt="$3"
-          pb="$1"
-        >
-          Password
-        </Text>
-        <Input>
-          <InputSlot pl="$2" pr="$1" onPress={hadleSetShowPassword}>
-            <InputIcon size="lg" as={LockIcon} color="$borderDark500" />
-          </InputSlot>
-          <InputField
-            type={showPassword ? "text" : "password"}
-            value={password}
-            onChangeText={(text) => {
-              hadleSetPassword(text);
-            }}
-          />
-          <InputSlot pr="$3" onPress={hadleSetShowPassword}>
-            <InputIcon
-              size="lg"
-              as={showPassword ? EyeIcon : EyeOffIcon}
-              color="$borderDark500"
-            />
-          </InputSlot>
-        </Input>
-      </VStack>
-    </FormControl>
+    <Box w="$full">
+      <Controller
+        name="email"
+        control={control}
+        render={({ field: { onChange, onBlur, value, ref } }) => (
+          <FormControl pt="$10" w="$full">
+            <FormControlLabel mb="$2">
+              <FormControlLabelText
+                fontWeight="bold"
+                color="$secondary_yellow4"
+              >
+                Email
+              </FormControlLabelText>
+            </FormControlLabel>
+            <Input>
+              <InputSlot pl="$2" pr="$1" onPress={hadleSetShowPassword}>
+                <InputIcon size="lg" as={MailIcon} color="$borderDark500" />
+              </InputSlot>
+              <InputField
+                onBlur={onBlur}
+                type="text"
+                value={value}
+                isDisabled={isSubmitting}
+                onChangeText={(text: string) => {
+                  onChange(text);
+                }}
+              />
+            </Input>
+            <FormControlError accessibilityRole="alert">
+              <FormControlErrorIcon
+                as={AlertCircleIcon}
+                size="2xs"
+                color="$error700"
+              />
+              <FormControlErrorText fontSize="$xs">
+                {errors.email?.message ?? ""}
+              </FormControlErrorText>
+            </FormControlError>
+          </FormControl>
+        )}
+      />
+      <Controller
+        name="password"
+        control={control}
+        render={({ field: { onChange, onBlur, value, ref } }) => (
+          <FormControl pt="$5" w="$full" isInvalid={!!errors.password?.message}>
+            <FormControlLabel mb="$2">
+              <FormControlLabelText
+                fontWeight="bold"
+                color="$secondary_yellow4"
+              >
+                Password
+              </FormControlLabelText>
+            </FormControlLabel>
+            <Input>
+              <InputSlot pl="$2" pr="$1" onPress={hadleSetShowPassword}>
+                <InputIcon size="lg" as={LockIcon} color="$borderDark500" />
+              </InputSlot>
+              <InputField
+                type={showPassword ? "text" : "password"}
+                value={value}
+                isDisabled={isSubmitting}
+                onChangeText={(text: string) => {
+                  onChange(text);
+                }}
+              />
+              <InputSlot pr="$3" onPress={hadleSetShowPassword}>
+                <InputIcon
+                  size="lg"
+                  as={showPassword ? EyeIcon : EyeOffIcon}
+                  color="$borderDark500"
+                />
+              </InputSlot>
+            </Input>
+            {/* <FormControlError accessibilityRole="alert">
+              <FormControlErrorIcon
+                as={AlertCircleIcon}
+                size="2xs"
+                color="$error700"
+              />
+              <FormControlErrorText fontSize="$xs">
+                {errors.password?.message ?? ""}
+              </FormControlErrorText>
+            </FormControlError> */}
+          </FormControl>
+        )}
+      />
+    </Box>
     <Button onPress={onLogin} mt="$8" w="$full" bgColor="$secondary_yellow3">
       <ButtonText color="$white" fontWeight="bold">
         LOG IN
@@ -177,7 +219,7 @@ const SignInView: React.FC<SignInViewProps> = ({
       <Text color="$black" fontSize="$sm" fontWeight="$semibold">
         Don't have an account?
       </Text>
-      <Pressable onPress={handleGoToSignUp} pl="$1">
+      <Pressable onPress={handleGoToSignUp} pl="$1" isDisabled={isDisabled}>
         <Text color="$secondary_yellow4" fontSize="$sm" fontWeight="$semibold">
           Sign up now
         </Text>
