@@ -2,6 +2,7 @@
   <string name="app_name">HD-Notes</string>
   <string name="expo_splash_screen_resize_mode" translatable="false">contain</string>
   <string name="expo_splash_screen_status_bar_translucent" translatable="false">false</string>
+  <string name="expo_system_ui_user_interface_style" translatable="false">light</string>
   <string name="facebook_app_id">1653449488804220</string>
   <string name="facebook_client_token">2fc51f5a65680fa4d80a92482777f43b</string>
   <string name="fb_login_protocol_scheme">fb1653449488804220</string>

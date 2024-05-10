@@ -3,16 +3,17 @@ import React, { useEffect } from "react";
 import { useRouter } from "expo-router";
 import { Box, Text, Image, Spinner } from "@gluestack-ui/themed";
 import { LogoImage } from "@/components/Elements";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Intro(): React.ReactElement {
   const router = useRouter();
   const init = async () => {
-    await new Promise((resolve) =>
-      setTimeout(() => {
-        resolve(true);
-      }, 1000)
-    );
-    router.replace("/sign-in");
+    const user = await AsyncStorage.getItem("@currentUser");
+    if (!user) {
+      router.replace("/sign-in");
+    } else {
+      router.replace("/home");
+    }
   };
 
   useEffect(() => {
@@ -31,18 +32,10 @@ function Intro(): React.ReactElement {
       <LogoImage />
       <Text
         pt="$1"
-        sx={{
-          "@base": {
-            fontSize: "$xl",
-            lineHeight: "$2xl",
-            fontWeight: "bold",
-            color: "#DAA520",
-          },
-          "@sm": {
-            fontSize: "$8xl",
-            lineHeight: "$7xl",
-          },
-        }}
+        fontSize="$xl"
+        lineHeight="$2xl"
+        fontWeight="bold"
+        color="#DAA520"
       >
         HD-Notes
       </Text>

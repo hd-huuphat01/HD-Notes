@@ -1,4 +1,6 @@
-import CustomButton from "./CustomButton";
 import LogoImage from "./Logo";
+import CustomButton from "./CustomButton";
+import ModalCustom from "./ModalCustom";
+import ModalCreateFolder from "./ModalCreateFolder";
 
-export { LogoImage, CustomButton };
+export { LogoImage, CustomButton, ModalCustom, ModalCreateFolder };

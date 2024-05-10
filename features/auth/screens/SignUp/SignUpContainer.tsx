@@ -7,6 +7,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import validator from "validator";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { useCreateAccount, useLogIn } from "firebase";
 
 interface SignUpContainerProps {}
@@ -56,9 +57,12 @@ const SignUpContainer: React.FC<SignUpContainerProps> = () => {
       const { email, password } = value;
       auth()
         .createUserWithEmailAndPassword(email, password)
-        .then((value: FirebaseAuthTypes.UserCredential) => {
+        .then(async (firebaseAuth: FirebaseAuthTypes.UserCredential) => {
           console.log("value", value);
           console.log("User account created & signed in!");
+          const idtoken = await firebaseAuth.user.getIdTokenResult();
+          console.log("idtoken", idtoken);
+          await AsyncStorage.setItem("@currentUser", idtoken.token);
           router.push("/home");
         })
         .catch((error: any) => {
@@ -80,7 +84,7 @@ const SignUpContainer: React.FC<SignUpContainerProps> = () => {
       isSubmitting={isSubmitting}
       isDisabled={!isValid || isSubmitting}
       showPassword={showPassword}
-      hadleSetShowPassword={() => setShowPassword(!showPassword)}
+      handleSetShowPassword={() => setShowPassword(!showPassword)}
       onLogin={() => {
         handleSubmit();
       }}

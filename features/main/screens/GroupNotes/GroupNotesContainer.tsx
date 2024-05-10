@@ -23,11 +23,11 @@ const GroupNotesContainer: React.FC<SignUpContainerProps> = () => {
   return (
     <GroupNotesView
       email={email}
-      hadleSetEmail={(text: string) => setEmail(text)}
+      handleSetEmail={(text: string) => setEmail(text)}
       password={password}
-      hadleSetPassword={(text: string) => setPassword(text)}
+      handleSetPassword={(text: string) => setPassword(text)}
       showPassword={showPassword}
-      hadleSetShowPassword={() => setShowPassword(!showPassword)}
+      handleSetShowPassword={() => setShowPassword(!showPassword)}
       onLogin={() => {
         handleSignUp();
       }}

@@ -22,22 +22,22 @@ import LogoView from "@/components/Elements/Logo";
 
 interface SignUpViewProps {
   email: string;
-  hadleSetEmail: (text: string) => void;
+  handleSetEmail: (text: string) => void;
   password: string;
-  hadleSetPassword: (text: string) => void;
+  handleSetPassword: (text: string) => void;
   showPassword: boolean;
-  hadleSetShowPassword: () => void;
+  handleSetShowPassword: () => void;
   onLogin: () => void;
   handleGoToSignUp: () => void;
 }
 
 const GroupNotesView: React.FC<SignUpViewProps> = ({
   email,
-  hadleSetEmail,
+  handleSetEmail,
   password,
-  hadleSetPassword,
+  handleSetPassword,
   showPassword,
-  hadleSetShowPassword,
+  handleSetShowPassword,
   onLogin,
   handleGoToSignUp,
 }) => (
@@ -64,14 +64,14 @@ const GroupNotesView: React.FC<SignUpViewProps> = ({
           Email
         </Text>
         <Input>
-          <InputSlot pl="$2" pr="$1" onPress={hadleSetShowPassword}>
+          <InputSlot pl="$2" pr="$1" onPress={handleSetShowPassword}>
             <InputIcon size="lg" as={MailIcon} color="$borderDark500" />
           </InputSlot>
           <InputField
             type="text"
             value={email}
             onChangeText={(text) => {
-              hadleSetEmail(text);
+              handleSetEmail(text);
             }}
           />
         </Input>
@@ -87,17 +87,17 @@ const GroupNotesView: React.FC<SignUpViewProps> = ({
           Password
         </Text>
         <Input>
-          <InputSlot pl="$2" pr="$1" onPress={hadleSetShowPassword}>
+          <InputSlot pl="$2" pr="$1" onPress={handleSetShowPassword}>
             <InputIcon size="lg" as={LockIcon} color="$borderDark500" />
           </InputSlot>
           <InputField
             type={showPassword ? "text" : "password"}
             value={password}
             onChangeText={(text) => {
-              hadleSetPassword(text);
+              handleSetPassword(text);
             }}
           />
-          <InputSlot pr="$3" onPress={hadleSetShowPassword}>
+          <InputSlot pr="$3" onPress={handleSetShowPassword}>
             <InputIcon
               size="lg"
               as={showPassword ? EyeIcon : EyeOffIcon}

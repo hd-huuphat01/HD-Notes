@@ -13,6 +13,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import validator from "validator";
 import { AccessToken, LoginManager } from "react-native-fbsdk-next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface SignInContainerProps {}
 
@@ -61,7 +62,7 @@ const SignInContainer: React.FC<SignInContainerProps> = () => {
     async (value: LoginForm) => {
       const { email, password } = value;
       console.log("email", email);
-      console.log("password", password);
+      console.log("password21", password);
 
       auth()
         .signInWithEmailAndPassword(email, password)
@@ -71,6 +72,7 @@ const SignInContainer: React.FC<SignInContainerProps> = () => {
           router.push("/home");
         })
         .catch((error) => {
+          console.log("error", error);
           if (error.code === "auth/email-already-in-use") {
             console.log("That email address is already in use!");
           }
@@ -93,14 +95,13 @@ const SignInContainer: React.FC<SignInContainerProps> = () => {
         // offlineAccess: true,
       });
       const result = await GoogleSignin.signIn();
-      console.log("result", result);
       const googleCredential = auth.GoogleAuthProvider.credential(
         result.idToken
       );
-      console.log("googleCredential", googleCredential);
       const firebaseAuth = await auth().signInWithCredential(googleCredential);
       const idtoken = await firebaseAuth.user.getIdTokenResult();
       console.log("idtoken", idtoken);
+      await AsyncStorage.setItem("@currentUser", idtoken.token);
       router.push("/home");
     } catch (error: any) {
       console.log("onLoginViaGoogle error", { error });
@@ -110,21 +111,27 @@ const SignInContainer: React.FC<SignInContainerProps> = () => {
   const handleSignInWithFacebook = () => {
     LoginManager.logInWithPermissions(["public_profile", "email"])
       .then((result) => {
-        AccessToken.getCurrentAccessToken().then(async (data) => {
-          if (data) {
-            const fbCredential = auth.FacebookAuthProvider.credential(
-              data.accessToken
-            );
-            console.log("fbCredential", fbCredential);
-            const firebaseAuth = await auth().signInWithCredential(
-              fbCredential
-            );
-            console.log("firebaseAuth", firebaseAuth);
-            const idtoken = await firebaseAuth.user.getIdTokenResult();
-            console.log("idtoken", idtoken);
-            router.push("/home");
-          }
-        });
+        if (result.grantedPermissions) {
+          AccessToken.getCurrentAccessToken().then(async (data) => {
+            if (data) {
+              try {
+                const fbCredential = auth.FacebookAuthProvider.credential(
+                  data.accessToken
+                );
+                console.log("fbCredential", fbCredential);
+                const firebaseAuth = await auth().signInWithCredential(
+                  fbCredential
+                );
+                console.log("firebaseAuth", firebaseAuth);
+                const idtoken = await firebaseAuth.user.getIdTokenResult();
+                console.log("idtoken", idtoken);
+                router.push("/home");
+              } catch (error) {
+                console.log("error", error);
+              }
+            }
+          });
+        }
       })
       .catch((error) => {
         console.log("login has error: " + error);
@@ -138,7 +145,7 @@ const SignInContainer: React.FC<SignInContainerProps> = () => {
       isSubmitting={isSubmitting}
       isDisabled={!isValid || isSubmitting}
       showPassword={showPassword}
-      hadleSetShowPassword={() => setShowPassword(!showPassword)}
+      handleSetShowPassword={() => setShowPassword(!showPassword)}
       onLogin={() => {
         handleSubmit();
       }}
